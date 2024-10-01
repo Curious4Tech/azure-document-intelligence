@@ -68,8 +68,8 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
 |-- azure-document-intelligence
     |-- app.py                   # Main Flask application
     |-- templates/
-         |---index.html          # HTML file for the web pages
-         |---result.html         # HTML file for analysis result
+           |---index.html          # HTML file for the web pages
+           |---result.html         # HTML file for analysis result
     |-- requirements.txt         # Python dependencies
     |-- README.md                # Project documentation (this file)
     |---.env                     # file that containts your document intelligence credentials
