@@ -1,6 +1,3 @@
-Here's a sample `README.md` file for your **Azure Document Intelligence** web app built using Flask and Python. You can modify the content as per your app's specific details and features.
-
-```md
 # Azure Document Intelligence Web App
 
 ## Overview
@@ -24,6 +21,12 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
 ## Setup and Installation
 
 ### Prerequisites
+
+- Python 3.x installed on your machine.
+- Azure subscription and an Azure Document Intelligence resource set up. You can follow [this guide](https://learn.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/try-v3-python-sdk) to set up the Azure resource.
+- Flask installed via pip:
+  ```bash
+  pip install Flask
 
 - Python 3.x installed on your machine.
 - Azure subscription and an Azure Document Intelligence resource set up. You can follow [this guide](https://learn.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/try-v3-python-sdk) to set up the Azure resource.
