@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result - Azure Document Intelligence Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0078d4;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .back-btn {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            text-align: center;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background-color: #005a9e;
+        }
+        .alert {
+         padding: 15px;
+         margin-bottom: 20px;
+         border: 1px solid transparent;
+        border-radius: 4px;
+   }
+    .alert-error {
+          color: #721c24;
+          background-color: #f8d7da;
+          border-color: #f5c6cb;
+     }
+   .alert-warning {
+           color: #856404;
+           background-color: #fff3cd;
+         border-color: #ffeeba;
+   }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis Result</h1>
+        
+        <div class="section">
+            <h2>Document Summary</h2>
+            <ul>
+            {% for key, value in data['Document Summary'].items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Key-Value Pairs</h2>
+            <ul>
+            {% for key, value in data['Key-Value Pairs'].items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Tables</h2>
+            {% for table in data['Tables'] %}
+                <h3>Table {{ loop.index }}</h3>
+                {% if table %}
+                    <table>
+                        <tr>
+                            {% for header in table[0].keys() %}
+                                <th>{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for row in table %}
+                            <tr>
+                                {% for cell in row.values() %}
+                                    <td>{{ cell }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p>No data in this table.</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="section">
+            <h2>Paragraphs</h2>
+            <ol>
+            {% for para in data['Paragraphs'] %}
+                <li>{{ para }}</li>
+            {% endfor %}
+            </ol>
+        </div>
+        
+        <a href="/" class="back-btn">Analyze Another Document</a>
+     </div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+</body>
+</html>
