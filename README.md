@@ -23,7 +23,6 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
 
 - Python 3.x installed on your machine.
 - Azure subscription and an Azure Document Intelligence resource set up.
-- Python 3.x installed on your machine.
 
 ### Installation Steps
 
@@ -37,11 +36,11 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
    cd azure-document-intelligence
    ```
 
-3. **Install required dependencies**
-  ```bash
-  pip install -r requirements.txt
-  ```
-4. **Set up Azure Credentials**:
+ 3. **Install required dependencies**
+       ```bash
+          pip install -r requirements.txt
+       ```
+ 4. **Set up Azure Credentials**:
    - Create a `.env` file in the root directory.
    - Add your Azure Document Intelligence API key and endpoint to the `.env` file:
      ```bash
@@ -69,9 +68,10 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
 |-- azure-document-intelligence
     |-- app.py                   # Main Flask application
     |-- templates/
-         |---index.html                # HTML templates for the web pages
-    |-- requirements.txt          # Python dependencies
-    |-- README.md                 # Project documentation (this file)
+         |---index.html          # HTML templates for the web pages
+    |-- requirements.txt         # Python dependencies
+    |-- README.md                # Project documentation (this file)
+    |---.env                     # file that containts your document intelligence credentials
 ```
 
 ## Azure Document Intelligence Integration
