@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a Flask-based web application that utilizes **Azure Document Intelligence** to perform automated document analysis, extract data, and provide insights from various document types such as invoices, receipts, and forms. The app integrates with the **Azure Cognitive Services** to enhance document processing with AI-powered capabilities.
+This is a Flask-based web application that utilizes **Azure Document Intelligence** to perform automated document analysis, extract data, and provide insights from various document types such as invoices, receipts, and forms. The app integrates with the **Azure AI Services** to enhance document processing with AI-powered capabilities.
 
 ## Features
 
@@ -15,8 +15,7 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
 
 - **Flask (Python)**: Web framework used to build the web app.
 - **Azure Document Intelligence API**: Azure's AI service used for document processing and extraction.
-- **HTML, CSS, JavaScript**: Front-end for user interface design and document interaction.
-- **Azure Blob Storage**: Used for storing uploaded documents (optional).
+- **HTML, CSS,**: Front-end for user interface design and document interaction.
 
 ## Setup and Installation
 
