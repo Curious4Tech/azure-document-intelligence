@@ -24,16 +24,34 @@ def index():
 
 def format_table(table):
     formatted_table = []
-    headers = [cell.content for cell in table.cells if cell.kind == "columnHeader"]
+    # Ensure headers are correctly extracted, check for duplicates in headers.
+    headers = []
+    for cell in table.cells:
+        if cell.kind == "columnHeader" and cell.content:
+            headers.append(cell.content)
+
+    if not headers:
+        headers = [f"Column {i+1}" for i in range(len(table.cells) // table.row_count)]  # Fallback in case there are no proper headers
+
     for row in table.cells:
-        if row.kind == "columnHeader":
+        if row.kind == "columnHeader" or row.content is None:
             continue
-        if row.row_index >= len(formatted_table):
+        
+        # Ensure the row index is within the bounds of formatted_table
+        while row.row_index >= len(formatted_table):
             formatted_table.append({})
-        formatted_table[row.row_index][headers[row.column_index]] = row.content
+        
+        # Check if the column index is within bounds of the headers list
+        if row.column_index < len(headers):
+            formatted_table[row.row_index][headers[row.column_index]] = row.content if row.content else "Not available"
+        else:
+            app.logger.warning(f"Column index {row.column_index} out of range for headers")
+            formatted_table[row.row_index][f"Column {row.column_index+1}"] = row.content if row.content else "Not available"  # Assign generic column name for out of range columns
+
     return formatted_table
 
 def safe_get_attribute(obj, attr, default="Not available"):
+    """Safely get the attribute of an object, return a default value if it's None."""
     return getattr(obj, attr, default)
 
 @app.route('/analyze', methods=['POST'])
@@ -62,14 +80,14 @@ def analyze_document():
             # Process the results
             formatted_result = {
                 "Document Summary": {
-                    "Page Count": len(result.pages),
+                    "Page Count": len(result.pages) if result.pages else 0,
                     "Language": safe_get_attribute(result, 'locale', 'Not specified'),
                     "Content Type": safe_get_attribute(result, 'content_type'),
-                    "Pages": len(result.pages)
+                    "Pages": len(result.pages) if result.pages else 0
                 },
-                "Key-Value Pairs": {kv.key.content: kv.value.content for kv in result.key_value_pairs},
-                "Tables": [format_table(table) for table in result.tables],
-                "Paragraphs": [para.content for para in result.paragraphs]
+                "Key-Value Pairs": {kv.key.content: kv.value.content for kv in result.key_value_pairs if kv.key and kv.value},
+                "Tables": [format_table(table) for table in result.tables if table],
+                "Paragraphs": [para.content for para in result.paragraphs if para.content]
             }
             
             # Add document type if available
