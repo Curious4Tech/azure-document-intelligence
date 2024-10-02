@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a Flask-based web application that utilizes **Azure Document Intelligence** to perform automated document analysis, extract data, and provide insights from various document types such as invoices, receipts, and forms. The app integrates with the **Azure Cognitive Services** to enhance document processing with AI-powered capabilities.
+This is a Flask-based web application that utilizes **Azure Document Intelligence** to perform automated document analysis, extract data, and provide insights from various document types such as invoices, receipts, and forms. The app integrates with the **Azure AI Services** to enhance document processing with AI-powered capabilities.
 
 ## Features
 
@@ -15,29 +15,14 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
 
 - **Flask (Python)**: Web framework used to build the web app.
 - **Azure Document Intelligence API**: Azure's AI service used for document processing and extraction.
-- **HTML, CSS, JavaScript**: Front-end for user interface design and document interaction.
-- **Azure Blob Storage**: Used for storing uploaded documents (optional).
+- **HTML, CSS,**: Front-end for user interface design and document interaction.
 
 ## Setup and Installation
 
 ### Prerequisites
 
 - Python 3.x installed on your machine.
-- Azure subscription and an Azure Document Intelligence resource set up. You can follow [this guide](https://learn.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/try-v3-python-sdk) to set up the Azure resource.
-- Flask installed via pip:
-  ```bash
-  pip install Flask
-
-- Python 3.x installed on your machine.
-- Azure subscription and an Azure Document Intelligence resource set up. You can follow [this guide](https://learn.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/try-v3-python-sdk) to set up the Azure resource.
-- Flask installed via pip:
-  ```bash
-  pip install Flask
-  ```
-- Install required dependencies:
-  ```bash
-  pip install -r requirements.txt
-  ```
+- Azure subscription and an Azure Document Intelligence resource set up.
 
 ### Installation Steps
 
@@ -51,20 +36,24 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
    cd azure-document-intelligence
    ```
 
-3. **Set up Azure Credentials**:
+ 3. **Install required dependencies**
+       ```bash
+          pip install -r requirements.txt
+       ```
+ 4. **Set up Azure Credentials**:
    - Create a `.env` file in the root directory.
    - Add your Azure Document Intelligence API key and endpoint to the `.env` file:
      ```bash
      AZURE_DOCUMENT_INTELLIGENCE_KEY=your-api-key
-     AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=https://your-endpoint.cognitiveservices.azure.com/
+     AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=your-document-intelligent-endpoint
      ```
 
-4. **Run the Flask App**:
+5. **Run the Flask App**:
    ```bash
    python app.py
    ```
 
-5. **Access the Application**:
+6. **Access the Application**:
    Open your web browser and navigate to `http://127.0.0.1:5000` to start using the app.
 
 ## Usage
@@ -78,10 +67,12 @@ This is a Flask-based web application that utilizes **Azure Document Intelligenc
 ```
 |-- azure-document-intelligence
     |-- app.py                   # Main Flask application
-    |-- templates/                # HTML templates for the web pages
-    |-- static/                   # Static files (CSS, JS)
-    |-- requirements.txt          # Python dependencies
-    |-- README.md                 # Project documentation (this file)
+    |-- templates/
+           |---index.html          # HTML file for the web pages
+           |---result.html         # HTML file for analysis result
+    |-- requirements.txt         # Python dependencies
+    |-- README.md                # Project documentation (this file)
+    |---.env                     # file that containts your document intelligence credentials
 ```
 
 ## Azure Document Intelligence Integration
@@ -92,26 +83,6 @@ To integrate with Azure Document Intelligence, the following Python SDKs are use
   
 The app uses the Form Recognizer client to send documents for analysis and receive structured data in return.
 
-Example code snippet for making an API call to Azure Document Intelligence:
-
-```python
-from azure.ai.formrecognizer import DocumentAnalysisClient
-from azure.core.credentials import AzureKeyCredential
-import os
-
-endpoint = os.getenv('AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT')
-key = os.getenv('AZURE_DOCUMENT_INTELLIGENCE_KEY')
-
-client = DocumentAnalysisClient(endpoint=endpoint, credential=AzureKeyCredential(key))
-
-with open('document.pdf', 'rb') as file:
-    poller = client.begin_analyze_document("prebuilt-invoice", document=file)
-    result = poller.result()
-
-for field in result.fields:
-    print(f"{field.label}: {field.value}")
-```
-
 ## Contributing
 
 Contributions are welcome! If you would like to contribute to this project, feel free to open an issue or submit a pull request.
@@ -119,18 +90,3 @@ Contributions are welcome! If you would like to contribute to this project, feel
 ## License
 
 This project is licensed under the MIT License.
-
-## Contact
-
-If you have any questions or need further assistance, feel free to reach out:
-
-- **Email**: your-email@example.com
-- **GitHub**: [Curious4Tech](https://github.com/Curious4Tech)
-
-```
-
-### Customization
-
-- Replace placeholders (e.g., `your-email@example.com`, `your-api-key`) with your actual information.
-- Add any additional dependencies or features your application uses.
-- If you are using Azure Blob Storage for document storage, include instructions on setting it up.
